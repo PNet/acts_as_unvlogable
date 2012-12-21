@@ -21,5 +21,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "shoulda"
   s.add_dependency("xml-simple")
   s.add_dependency("youtube_it")
-  s.add_dependency("hpricot")
+  s.add_dependency("nokogiri")
 end

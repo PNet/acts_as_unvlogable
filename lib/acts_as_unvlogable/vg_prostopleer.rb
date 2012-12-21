@@ -3,32 +3,32 @@
 #  http://prostopleer.com/tracks/401758bI6n
 # ----------------------------------------------
 
-require 'hpricot'
+require 'nokogiri'
 
 class VgProstopleer
-  
+
   attr_accessor :track_id
-  
+
   def initialize(url, options={})
     @uri = URI.parse(url)
     @track_id = @uri.path.match(/tracks\/([\w\d]+)/)[1]
     @url = url
     raise ArgumentError unless @track_id
   end
-  
+
   def title
     @title ||= [pp_data[:singer], pp_data[:song]].join(' - ')
   end
-  
+
   def embed_html(width=411, height=28, options = {})
     return "<object width=\"#{width}\" height=\"#{height}\"><param name=\"movie\" value=\"http://embed.prostopleer.com/track?id=#{track_id}\"></param><embed src=\"http://embed.prostopleer.com/track?id=#{track_id}\" type=\"application/x-shockwave-flash\" width=\"#{width}\" height=\"#{height}\"></embed></object>"
   end
-  
+
   def service
     "ProstoPleer"
   end
-  
-  private  
+
+  private
   def pp_data
     return @pp_data if defined? @pp_data
     hp = Hpricot.parse(Net::HTTP.get(@uri))

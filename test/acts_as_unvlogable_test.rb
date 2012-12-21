@@ -9,21 +9,21 @@ require 'shoulda'
 require 'ruby-debug'
 
 class ActsAsUnvlogableTest < Test::Unit::TestCase
-  
+
   context "Instancing UnvlogIt" do
-    
+
     context "without any url" do
       should "raise an ArgumentError exception" do
         assert_raise(ArgumentError, "We need a video url") { UnvlogIt.new }
       end
     end
-    
+
     context "with an unsupported url" do
       should "raise an ArgumentError exception" do
         assert_raise(ArgumentError, "Unsuported url or service") { UnvlogIt.new("http://iwannagothere.net/") }
       end
     end
-    
+
 # ----------------------------------------------------------
 #   Testing youtube
 # ----------------------------------------------------------
@@ -37,7 +37,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "MVa4q-YVjD8", @videotron.instance_values['object'].instance_values['video_id']
         assert_not_nil @videotron.instance_values['object'].instance_values['details']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "Keith Moon´s drum kit explodes", :service => "Youtube"})
       end
@@ -45,10 +45,10 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
 
     context "with an existent youtube url that can not be embedded" do
         should "raise an ArgumentError" do
-          assert_raise(ArgumentError, "Embedding disabled by request") { UnvlogIt.new("http://www.youtube.com/watch?v=3Oec8RuwVVs") }# => The Killers - Read My Mind 
+          assert_raise(ArgumentError, "Embedding disabled by request") { UnvlogIt.new("http://www.youtube.com/watch?v=3Oec8RuwVVs") }# => The Killers - Read My Mind
         end
     end
-    
+
     context "with an inexistent youtube url" do
       should "raise an ArgumentError" do
         assert_raise(ArgumentError, "Unsuported url or service") { UnvlogIt.new("http://www.youtube.com/watch?v=inexistente") }
@@ -60,7 +60,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
 # ----------------------------------------------------------
     context "with an existent metacafe url" do
       setup do
-        @videotron = UnvlogIt.new("http://www.metacafe.com/watch/1135061/close_call_a320_caught_in_crosswinds/") # => Close Call! A320 Caught in Crosswinds 
+        @videotron = UnvlogIt.new("http://www.metacafe.com/watch/1135061/close_call_a320_caught_in_crosswinds/") # => Close Call! A320 Caught in Crosswinds
       end
       should "initialize a VgMetacafe instance" do
         assert_equal VgMetacafe, @videotron.instance_values['object'].class
@@ -69,15 +69,15 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert !@videotron.instance_values['object'].instance_values['youtubed']
         assert_nil @videotron.instance_values['object'].instance_values['yt']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "Close call a320 caught in crosswinds", :service => "Metacafe"})
       end
     end
-    
+
     context "with an existent 'youtubed' metacafe url" do
       setup do
-        @videotron = UnvlogIt.new("http://www.metacafe.com/watch/yt-r07zdVLOWBA/pop_rocks_and_coke_myth/") # => Close Call! A320 Caught in Crosswinds 
+        @videotron = UnvlogIt.new("http://www.metacafe.com/watch/yt-r07zdVLOWBA/pop_rocks_and_coke_myth/") # => Close Call! A320 Caught in Crosswinds
       end
       should "initialize a VgMetacafe instance" do
         assert_equal VgMetacafe, @videotron.instance_values['object'].class
@@ -86,13 +86,13 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert @videotron.instance_values['object'].instance_values['youtubed']
         assert "VgYoutube", @videotron.instance_values['object'].instance_values['yt'].class.to_s
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "Pop Rocks and Coke Myth", :service => "Metacafe"})
       end
     end
-    
-    
+
+
   end
 
 
@@ -109,7 +109,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "x7u5kn_parkour-dayyy_sport", @videotron.instance_values['object'].instance_values['video_id']
         assert_not_nil @videotron.instance_values['object'].instance_values['feed']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "parkour dayyy", :service => "Dailymotion"})
       end
@@ -130,7 +130,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "1781938", @videotron.instance_values['object'].instance_values['video_id']
         assert_not_nil @videotron.instance_values['object'].instance_values['feed']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "Brohemian Rhapsody", :service => "CollegeHumor"})
       end
@@ -149,7 +149,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "http://blip.tv/file/678407/", @videotron.instance_values['object'].instance_values['url']
         assert_not_nil @videotron.instance_values['object'].instance_values['feed']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "Toy Break 26 : Adult Toys", :service => "Blip.tv"})
       end
@@ -169,7 +169,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "27111431", @videotron.instance_values['object'].instance_values['video_id']
         assert_not_nil @videotron.instance_values['object'].instance_values['feed']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "rocabilis", :service => "Myspace"})
       end
@@ -189,7 +189,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_not_nil @videotron.instance_values['object'].instance_values['page']
         assert_not_nil @videotron.instance_values['object'].instance_values['flashvars']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "Chic & Basic Born", :service => "11870.com"})
       end
@@ -209,9 +209,9 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "80280", @videotron.instance_values['object'].instance_values['video_id']
         assert_not_nil @videotron.instance_values['object'].instance_values['page']
       end
-      
+
       should "return the video properties" do
-        check_video_attributes({:title => "Camelos.Semos. Jonathan. Tú si que vales.", :service => "dalealplay"}) 
+        check_video_attributes({:title => "Camelos.Semos. Jonathan. Tú si que vales.", :service => "dalealplay"})
       end
     end
 
@@ -230,7 +230,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "4152225414", @videotron.instance_values['object'].instance_values['video_id']
         assert_not_nil @videotron.instance_values['object'].instance_values['details']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "flipando en los columpios", :service => "Flickr"})
       end
@@ -250,7 +250,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "340982", @videotron.instance_values['object'].instance_values['video_id']
         assert_not_nil @videotron.instance_values['object'].instance_values['page']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "Honolulu Day 8: USS Arizona at Pearl Harbor", :service => "Qik"})
       end
@@ -271,7 +271,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "DN23wG8c1Rj", @videotron.instance_values['object'].instance_values['video_id']
         assert_not_nil @videotron.instance_values['object'].instance_values['feed']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "Pau entra por la puerta grande en el club de los 10.000", :service => "Marca.tv"})
       end
@@ -293,12 +293,12 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_not_nil @videotron.instance_values['object'].instance_values['flashvars']
         assert_not_nil @videotron.instance_values['object'].instance_values['args']
       end
-      
+
       should "return the video properties" do
         check_video_attributes({:title => "Benjamin Wallace: The price of happiness", :service => "Ted Talks"})
       end
     end
-    
+
     context "with an invalid ted talks video url" do
       should "raise an ArgumentError exception" do
         assert_raise(ArgumentError, "Unsuported url or service") { UnvlogIt.new("http://www.ted.com/index.php/wadus.html") }
@@ -319,9 +319,9 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_equal "2354261", @videotron.instance_values['object'].instance_values['video_id']
         assert_not_nil @videotron.instance_values['object'].instance_values['feed']
       end
-      
+
       should "return the video properties" do
-        check_video_attributes({:title => "People are strange", :service => "Vimeo"})
+        check_video_attributes({:title => "People are strange", :service => "Vimeo", :noflv=>true})
       end
     end
 
@@ -349,7 +349,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
         assert_raise(ArgumentError, "Unsuported url or service") { UnvlogIt.new("http://rutube.ru/tracks/abdcd.html?v=523423") }
       end
     end
-    
+
 # ----------------------------------------------------------
 #   Testing Prostopleer
 # ----------------------------------------------------------
@@ -372,7 +372,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
     end
 
   protected
-  
+
   def check_video_attributes(options={})
     assert_equal "#{options[:title]}", @videotron.title unless (options.blank? || options[:title].blank?)
     assert_equal "#{options[:service]}", @videotron.service unless (options.blank? || options[:service].blank?)
@@ -386,7 +386,9 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
       assert_nil @videotron.video_details[:embed_url]
       assert_nil @videotron.video_details[:embed_html]
     end
-    assert_not_nil @videotron.flv
+    unless options[:noflv]
+      assert_not_nil @videotron.flv
+    end
     assert_equal Hash, @videotron.video_details.class
   end
 end

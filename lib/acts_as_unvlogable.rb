@@ -3,7 +3,7 @@ require "bundler/setup"
 
 require "xmlsimple"
 require "youtube_it"
-require "hpricot"
+require "nokogiri"
 require "net/http"
 require "json"
 
@@ -20,7 +20,7 @@ videolibs = File.join(File.dirname(__FILE__), "acts_as_unvlogable", "vg_*.rb")
 Dir.glob(videolibs).each {|file| require file}
 
 class UnvlogIt
-  
+
   def initialize(url=nil, options={})
     raise ArgumentError.new("We need a video url") if url.blank?
     @object ||= "vg_#{get_domain(url).downcase}".camelize.constantize.new(url, options) rescue nil
@@ -29,23 +29,23 @@ class UnvlogIt
       raise ArgumentError.new("Embedding disabled by request") and return if @object.instance_variable_get("@details").noembed
     end
   end
-  
+
   def title
     @object.title #rescue nil
   end
-  
+
   def thumbnail
     @object.thumbnail rescue nil
   end
-  
+
   def duration # duration is in seconds
     @object.duration rescue nil
   end
-  
+
   def embed_url
     @object.embed_url rescue nil
   end
-  
+
   def video_id
     @object.video_id rescue nil
   end
@@ -53,11 +53,11 @@ class UnvlogIt
   def embed_html(width=425, height=344, options={})
     @object.embed_html(width, height, options) rescue nil
   end
-  
+
   def flv
-    @object.flv #rescue nil
+    @object.flv rescue nil
   end
-  
+
   def download_url
     @object.download_url rescue nil
   end
@@ -65,7 +65,7 @@ class UnvlogIt
   def service
     @object.service rescue nil
   end
-  
+
   def video_details(width=425, height=344)
     {
       :title => @object.title,
@@ -79,7 +79,7 @@ class UnvlogIt
     }
   end
 
-  
+
   def get_domain(url)
     host = URI::parse(url).host.split(".")
     unless host.size == 1
@@ -88,5 +88,5 @@ class UnvlogIt
       host[0]
     end
   end
-  
+
 end
