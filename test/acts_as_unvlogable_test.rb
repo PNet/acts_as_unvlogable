@@ -321,7 +321,7 @@ class ActsAsUnvlogableTest < Test::Unit::TestCase
       end
 
       should "return the video properties" do
-        check_video_attributes({:title => "People are strange", :service => "Vimeo", :noflv=>true})
+        check_video_attributes({:title => "People are strange", :service => "Vimeo", :noflv=>true, :thumbnail => "http://b.vimeocdn.com/ts/209/978/20997854_640.jpg"})
       end
     end
 

@@ -27,8 +27,8 @@ class VgVimeo
     @feed[0]["description"]
   end
 
-  def thumbnail
-    @feed[0]['thumbnail_large']
+  def thumbnail(size = "large")
+    @feed[0]["thumbnail_#{size}"]
   end
 
   def duration
