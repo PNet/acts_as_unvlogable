@@ -21,7 +21,7 @@ class VgYoutube
   
   def thumbnail(size = "large")
     # FIX unused size
-    @details.thumbnails.first.url
+    (@details.thumbnails[2] || @details.thumbnails.first).url
   end
   
   def duration
