@@ -36,11 +36,13 @@ class VgVimeo
   end
 
   def embed_url
-    "http://vimeo.com/moogaloop.swf?clip_id=#{@video_id}&server=vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=1"
+    "http://player.vimeo.com/video/#{@video_id}"
+    #"http://vimeo.com/moogaloop.swf?clip_id=#{@video_id}&server=vimeo.com&fullscreen=1&show_title=1&show_byline=1&show_portrait=1"
   end
 
-  def embed_html(width=425, height=344, options={})
-    "<object width='#{width}' height='#{height}'><param name='movie' value='#{embed_url}'></param><param name='allowFullScreen' value='true'></param><param name='allowscriptaccess' value='always'></param><embed src='#{embed_url}' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true' width='#{width}' height='#{height}'></embed></object>"
+  def embed_html(width=528, height=297, options={})
+    #{}"<object width='#{width}' height='#{height}'><param name='movie' value='#{embed_url}'></param><param name='allowFullScreen' value='true'></param><param name='allowscriptaccess' value='always'></param><embed src='#{embed_url}' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true' width='#{width}' height='#{height}'></embed></object>"
+    "<iframe src=\"#{embed_url}\" width=\"#{width}\" height=\"#{height}\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>"
   end
 
   def flv
